@@ -24,12 +24,7 @@ body {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: $main-color;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  background-color: #E7F6FF;
 }
 
 .title {
@@ -45,13 +40,13 @@ code {
   font-size: 14px;
 }
 
-.button {
-  background-color: $white-color;
-  border-radius: 8px;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-}
+// .button {
+//   background-color: $white-color;
+//   border-radius: 8px;
+//   width: 32px;
+//   height: 32px;
+//   cursor: pointer;
+// }
 
 .wrapper {
   max-width: 1080px;
@@ -61,34 +56,7 @@ code {
   border-radius: 20px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 45px;
-  border-bottom: 1px solid #EAEAEA;
-  border-radius: 20px;
-  &__left, &__right {
-    display: flex;
-    justify-content: space-between;
-  }
-  &__right {
-    gap: 30px;
-  }
-  &__logo {
-    margin-right: 15px;
-  }
-  &__info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  &__card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
+
 .content {
   padding: 40px;
   border-radius: 20px;
@@ -137,126 +105,11 @@ code {
   height: 14.25px;
 }
 
-.overlay {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  .drawer {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    padding: 30px;
-    top: 0;
-    right: 0;
-    width: 385px;
-    height: 100%;
-    background: $white-color;
-    box-shadow: -10px 4px 24px 0px rgba(0, 0, 0, 0.10);
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    &__title {
-        font-size: 24px;
-        font-weight: 700;
-    }
-    &__card {
-        display: flex;
-        gap: 15px;
-        padding: 20px;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 325px;
-        min-height: 119px;
-        border-radius: 20px;
-        border: 1px solid #F3F3F3;
-        background: #FFF;
-        overflow: hidden;
-        &-descr {
-            display: flex;
-            gap: 8px;
-            flex-direction: column;
-            justify-content: center;
-        }
-    }
-  }
-}
-
-.cart-item {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 30px;
-    overflow: auto;
-}
-
 .remove__btn {
     opacity: 0.5;
     transition: all 0.2s ease-in-out;
     &:hover {
         opacity: 1;
-    }
-}
-
-.order {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.btn {
-    display: block;
-    margin: 0 auto;
-    position: relative;
-    width: 100%;
-    height: 55px;
-    border-radius: 18px;
-    background: $green-color;
-    color: $white-color;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    &__arrow {
-        position: absolute;
-        top: 22px;
-        right: 33px;
-    }
-    &:hover {
-        transition: all 0.2s ease-in-out;
-        background: #78a244;
-        img {
-            transition: transform 0.2s ease-in-out;
-            transform: translateX(5px);
-        }
-    }
-}
-
-.price__block {
-    b {
-        font-weight: 600;
-    }
-}
-
-.price__item {
-    margin-top: 19px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    div {
-        position: relative;
-        top: -3px;
-        flex: 1;
-        border-bottom: 1px dashed #DFDFDF;
-        height: 1px;
-        margin: 0 7px;
     }
 }
 

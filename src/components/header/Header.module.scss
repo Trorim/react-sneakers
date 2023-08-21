@@ -1,0 +1,29 @@
+.header {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 45px;
+    border-bottom: 1px solid #EAEAEA;
+    border-radius: 20px;
+    &__left, &__right {
+      display: flex;
+      justify-content: space-between;
+    }
+    &__right {
+      gap: 30px;
+    }
+    &__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .cart {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+}

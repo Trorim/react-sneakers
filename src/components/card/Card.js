@@ -1,25 +1,38 @@
+import { useState } from 'react';
+
 import style from './Card.module.scss';
 
-function Card(props) {
+function Card( {title, price, imgUrl, onPlus, onFavorite} ) {
+    const [isAdded, setAdded] = useState(false);
+
+    function onClickPlus() {
+        onPlus({title, price, imgUrl});
+        setAdded(!isAdded);
+    }
+
     return (
         <div className={style.card}>
-            <div className={style.favorit}>
+            <button className={style.favorit}
+                    onClick={onFavorite}>
                 <img width={32} height={32} src="./img/heart-unliked.svg" alt="unliked" />
-            </div>
+            </button>
             <div>
                 <img width={133}
                      height={112}
-                     src={props.imgUrl} alt="sneaker" />
-                <p className={style.card__descr}>{props.title}</p>
+                     src={imgUrl} alt="sneaker" />
+                <p className={style.card__descr}>{title}</p>
             </div>
             <div className={style.price}>
                 <div>
                     <span>Цена:</span>
-                    <b>{props.price} руб.</b>
+                    <b>{price} руб.</b>
                 </div>
-                <button className='button'>
-                    <img width={32} height={32} src="./img/plus.svg" alt="add to card" />
-                </button>
+                <img width={32} 
+                     height={32} 
+                     className={style.plus}
+                     onClick={onClickPlus}
+                     src={(isAdded) ? "./img/btn-checked.svg" : "./img/plus.svg"} 
+                     alt="add to card" />
             </div>
         </div>
     )
