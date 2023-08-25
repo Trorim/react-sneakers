@@ -5,12 +5,16 @@
     width: 100%;
     height: 55px;
     border-radius: 18px;
-    background: #A5D364;
+    background: #a5d364;
     color: #fff;
     text-align: center;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    &:disabled {
+        background-color: #bebebe;
+        cursor: default;
+    }
     &__arrow {
         position: absolute;
         top: 22px;
@@ -28,5 +32,17 @@
             transition: transform 0.2s ease-in-out;
             transform: translateX(-5px);
         }
+    }
+}
+
+@keyframes btn-loading {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
     }
 }

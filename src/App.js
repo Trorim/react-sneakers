@@ -131,57 +131,76 @@ function App() {
         axios.delete(`https://64e35d56bac46e480e78a936.mockapi.io/cart/${id}`);
     };
 
+    const isItemAdded = (imgUrl) => {
+        return cartItems.some((obj) => obj.imgUrl === imgUrl);
+    };
+
     return (
-        <div className="wrapper">
-            {cartOpened && (
+        <AppContext.Provider
+            value={{
+                items,
+                cartItems,
+                favorites,
+                isItemAdded,
+                setCartOpened,
+                setCartItems,
+                onAddFavorite,
+                onAddtoCart,
+            }}
+        >
+            <div className="wrapper">
                 <Drawer
                     cartItems={cartItems}
                     setCartItems={setCartItems}
                     onClose={() => setCartOpened(false)}
                     onRemoveItem={(id) => onRemoveItem(id)}
-                />
-            )}
-            <Header
-                onClickCart={() => setCartOpened(true)}
-                cartItems={cartItems}
-            />
-
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <Home
-                            searchValue={searchValue}
-                            items={items}
-                            favorites={favorites}
-                            cartItems={cartItems}
-                            isLoading={isLoading}
-                            setSearchValue={setSearchValue}
-                            onChangeInput={onChangeInput}
-                            onAddFavorite={(obj) => onAddFavorite(obj)}
-                            onAddtoCart={(obj) => onAddtoCart(obj)}
-                        />
-                    }
+                    opened={cartOpened}
                 />
 
-                <Route
-                    path="/favorites"
-                    element={
-                        <Favorites
-                            favorites={favorites}
-                            isLoading={isLoading}
-                            onAddFavorite={(obj) => onAddFavorite(obj)}
-                            onAddtoCart={onAddtoCart}
-                        />
-                    }
-                />
-                <Route
-                    path="/orders"
-                    element={<Orders isLoading={isLoading} />}
-                />
-                <Route path="*" element={<Error />} />
-            </Routes>
-        </div>
+                <Header />
+
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <Home
+                                searchValue={searchValue}
+                                items={items}
+                                favorites={favorites}
+                                cartItems={cartItems}
+                                isLoading={isLoading}
+                                setSearchValue={setSearchValue}
+                                onChangeInput={onChangeInput}
+                                onAddFavorite={(obj) => onAddFavorite(obj)}
+                                onAddtoCart={(obj) => onAddtoCart(obj)}
+                            />
+                        }
+                    />
+
+                    <Route
+                        path="/favorites"
+                        element={
+                            <Favorites
+                                isLoading={isLoading}
+                                onAddFavorite={(obj) => onAddFavorite(obj)}
+                                onAddtoCart={onAddtoCart}
+                            />
+                        }
+                    />
+                    <Route
+                        path="/orders"
+                        element={
+                            <Orders
+                                isLoading={isLoading}
+                                nAddFavorite={(obj) => onAddFavorite(obj)}
+                                onAddtoCart={onAddtoCart}
+                            />
+                        }
+                    />
+                    <Route path="*" element={<Error />} />
+                </Routes>
+            </div>
+        </AppContext.Provider>
     );
 }
 

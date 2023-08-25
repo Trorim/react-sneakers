@@ -1,10 +1,10 @@
 import Card from "../components/card/Card";
+import Skeleton from "../components/skeleton/Skeleton";
 
 function Home({
     searchValue,
     items,
     favorites,
-    cartItems,
     isLoading,
     setSearchValue,
     onChangeInput,
@@ -44,23 +44,24 @@ function Home({
                 </div>
             </div>
             <div className="sneakers">
-                {(isLoading
-                    ? items.filter((item) =>
-                          item.title.toLowerCase().includes(searchValue)
-                      )
-                    : [...Array(4)]
-                ).map((obj, i) => (
-                    <Card
-                        favorited={favorites.some(
-                            (item) => obj.imgUrl === item.imgUrl
-                        )}
-                        onFavorite={(obj) => onAddFavorite(obj)}
-                        onPlus={(obj) => onAddtoCart(obj)}
-                        key={i}
-                        isLoading={isLoading}
-                        {...obj}
-                    />
-                ))}
+                {isLoading
+                    ? items
+                          .filter((item) =>
+                              item.title.toLowerCase().includes(searchValue)
+                          )
+                          .map((obj, i) => (
+                              <Card
+                                  favorited={favorites.some(
+                                      (item) => obj.imgUrl === item.imgUrl
+                                  )}
+                                  onFavorite={(obj) => onAddFavorite(obj)}
+                                  onPlus={(obj) => onAddtoCart(obj)}
+                                  key={i}
+                                  isLoading={isLoading}
+                                  {...obj}
+                              />
+                          ))
+                    : [...Array(4)].map((item, i) => <Skeleton key={i} />)}
             </div>
         </div>
     );

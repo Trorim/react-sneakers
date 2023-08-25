@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 
 import style from "./Header.module.scss";
+import { useContext } from "react";
+import AppContext from "../../context";
+import { useCart } from "../../hooks/useCart";
 
-function Header({ onClickCart, cartItems }) {
+function Header() {
+    const { setCartOpened } = useContext(AppContext);
+    const { cartItems, price } = useCart();
+
     return (
         <header className={style.header}>
             <Link to="/">
@@ -23,7 +29,7 @@ function Header({ onClickCart, cartItems }) {
                 </div>
             </Link>
             <ul className={style.header__right}>
-                <li className={style.cart} onClick={onClickCart}>
+                <li className={style.cart} onClick={() => setCartOpened(true)}>
                     <img
                         width={20}
                         height={20}
@@ -31,10 +37,7 @@ function Header({ onClickCart, cartItems }) {
                         alt="card"
                         style={{ marginRight: "10px" }}
                     />
-                    <span className="descr">
-                        {cartItems.reduce((sum, cur) => sum + +cur.price, 0) +
-                            " руб."}
-                    </span>
+                    <span className="descr">{`${price} руб.`}</span>
                 </li>
                 <li>
                     <Link to="/favorites">

@@ -1,16 +1,28 @@
 import "../index.scss";
 import Card from "../components/card/Card";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import AppContext from "../context";
+import Skeleton from "../components/skeleton/Skeleton";
 
-function Orders({ isLoading }) {
+function Orders() {
+    const { onAddFavorite, onAddtoCart } = useContext(AppContext);
     const [order, setOrder] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get(
-                "https://64e5b24809e64530d17edcdc.mockapi.io/orders"
-            );
-            setOrder(data);
+            try {
+                const { data } = await axios.get(
+                    "https://64e5b24809e64530d17edcdc.mockapi.io/orders"
+                );
+                console.log(data);
+                setOrder(
+                    data.reduce((prev, obj) => [...prev, ...obj.items], [])
+                );
+                setIsLoading(true);
+            } catch (error) {
+                console.log("Error orders");
+            }
         })();
     }, []);
 
@@ -21,9 +33,11 @@ function Orders({ isLoading }) {
                     <h1>Мои покупки</h1>
                 </div>
                 <div className="sneakers">
-                    {(isLoading ? [] : [...Array(4)]).map((obj, i) => (
-                        <Card isLoading={isLoading} key={i} {...obj} />
-                    ))}
+                    {isLoading
+                        ? order.map((obj, i) => (
+                              <Card key={i} isLoading={isLoading} {...obj} />
+                          ))
+                        : [...Array(4)].map((item, i) => <Skeleton key={i} />)}
                 </div>
             </div>
         </>

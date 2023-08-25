@@ -1,19 +1,49 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import btn from "../../btn.module.scss";
 import style from "./Drawer.module.scss";
+import Info from "../info/Info";
+import AppContext from "../../context";
+import axios from "axios";
+import { useCart } from "../../hooks/useCart";
 
-function Drawer({ onClose, cartItems = [], setCartItems, onRemoveItem }) {
+function Drawer({ onClose, onRemoveItem, opened }) {
+    const { setCartItems } = useContext(AppContext);
+    const { cartItems, price } = useCart();
     const [isOrderComplited, setIsOrderComplited] = useState(false);
+    const [orderId, setOrderId] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const price = cartItems.reduce((sum, cur) => sum + +cur.price, 0);
+    const onClickOrder = async () => {
+        try {
+            setIsLoading(true);
+            const { data } = await axios.post(
+                "https://64e5b24809e64530d17edcdc.mockapi.io/orders",
+                { items: cartItems }
+            );
+            setOrderId(data.id);
+            setIsOrderComplited(true);
+            setCartItems([]);
 
-    const pushOrder = () => {
-        setIsOrderComplited(!isOrderComplited);
-        setCartItems([]);
+            (async function () {
+                for await (let item of cartItems) {
+                    axios.delete(
+                        "https://64e35d56bac46e480e78a936.mockapi.io/cart/" +
+                            item.id
+                    );
+                }
+            })();
+        } catch (error) {
+            console.log("Error order");
+        }
+        setIsLoading(false);
     };
 
     return (
-        <div className={style.overlay}>
+        <div
+            className={`${style.overlay} ${
+                opened ? style.overlay__visibility : ""
+            }`}
+        >
             <div className={style.drawer}>
                 <div className={style.drawer__header}>
                     <h2>Корзина</h2>
@@ -70,8 +100,12 @@ function Drawer({ onClose, cartItems = [], setCartItems, onRemoveItem }) {
                                     <b>{`${Math.round(price * 0.05)} руб.`}</b>
                                 </div>
                             </div>
-                            <button className={btn.btn}>
-                                <p onClick={pushOrder}>Оформить заказ</p>
+                            <button
+                                disabled={isLoading}
+                                className={btn.btn}
+                                onClick={onClickOrder}
+                            >
+                                <p>Оформить заказ</p>
                                 <img
                                     className={btn.btn__arrow}
                                     src="./img/arrow.svg"
@@ -81,26 +115,23 @@ function Drawer({ onClose, cartItems = [], setCartItems, onRemoveItem }) {
                         </div>
                     </>
                 ) : (
-                    <div className={style.drawer__block}>
-                        <img
-                            width={120}
-                            height={120}
-                            src="./img/cart.png"
-                            alt="Сart is empty"
-                        />
-                        <div className={style.drawer__header}>
-                            <h2>Корзина пустая</h2>
-                        </div>
-                        <p>Добавьте товар, чтобы сделать заказ.</p>
-                        <button className={btn.btn} onClick={onClose}>
-                            <img
-                                className={btn.btn__left}
-                                src="./img/arrow-left.svg"
-                                alt="arrow"
-                            />
-                            <p>Вернуться назад</p>
-                        </button>
-                    </div>
+                    <Info
+                        title={
+                            isOrderComplited
+                                ? "Заказ оформлен!"
+                                : "Корзина пустая"
+                        }
+                        descr={
+                            isOrderComplited
+                                ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке`
+                                : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."
+                        }
+                        image={
+                            isOrderComplited
+                                ? "./img/order.png"
+                                : "./img/cart.png"
+                        }
+                    />
                 )}
             </div>
         </div>
