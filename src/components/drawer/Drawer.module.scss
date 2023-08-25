@@ -8,6 +8,7 @@
     z-index: 2;
     .drawer {
         display: flex;
+        gap: 30px;
         flex-direction: column;
         position: absolute;
         padding: 30px;
@@ -17,6 +18,14 @@
         height: 100%;
         background: #fff;
         box-shadow: -10px 4px 24px 0px rgba(0, 0, 0, 0.10);
+        &__block {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+        }
         &__header {
             display: flex;
             justify-content: space-between;

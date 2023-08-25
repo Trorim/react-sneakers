@@ -14,14 +14,19 @@
     &__arrow {
         position: absolute;
         top: 22px;
-        right: 33px;
+        right: 20px;
+    }
+    &__left {
+        position: absolute;
+        top: 22px;
+        left: 20px;
     }
     &:hover {
         transition: all 0.2s ease-in-out;
         background: #78a244;
-        img {
+        .btn__left {
             transition: transform 0.2s ease-in-out;
-            transform: translateX(5px);
+            transform: translateX(-5px);
         }
     }
 }

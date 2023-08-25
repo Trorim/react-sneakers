@@ -1,25 +1,49 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import style from './Card.module.scss';
+import Skeleton from "../skeleton/Skeleton";
 
-function Card( {title, price, imgUrl, onPlus, onFavorite} ) {
-    const [isAdded, setAdded] = useState(false);
+import style from "./Card.module.scss";
+
+function Card({
+    id,
+    title,
+    price,
+    imgUrl,
+    onPlus,
+    onFavorite,
+    favorited = false,
+    added = false,
+    isLoading,
+}) {
+    const [isAdded, setAdded] = useState(added);
+    const [isFavorite, setIsFavorite] = useState(favorited);
 
     function onClickPlus() {
-        onPlus({title, price, imgUrl});
+        onPlus({ id, title, price, imgUrl });
         setAdded(!isAdded);
     }
 
-    return (
+    function onClickFavorite() {
+        onFavorite({ title, imgUrl, price, id });
+        setIsFavorite(!isFavorite);
+    }
+
+    return isLoading ? (
         <div className={style.card}>
-            <button className={style.favorit}
-                    onClick={onFavorite}>
-                <img width={32} height={32} src="./img/heart-unliked.svg" alt="unliked" />
+            <button className={style.favorite} onClick={onClickFavorite}>
+                <img
+                    width={32}
+                    height={32}
+                    src={
+                        isFavorite
+                            ? "./img/heart-liked.svg"
+                            : "./img/heart-unliked.svg"
+                    }
+                    alt="unliked"
+                />
             </button>
             <div>
-                <img width={133}
-                     height={112}
-                     src={imgUrl} alt="sneaker" />
+                <img width={133} height={112} src={imgUrl} alt="sneaker" />
                 <p className={style.card__descr}>{title}</p>
             </div>
             <div className={style.price}>
@@ -27,15 +51,19 @@ function Card( {title, price, imgUrl, onPlus, onFavorite} ) {
                     <span>Цена:</span>
                     <b>{price} руб.</b>
                 </div>
-                <img width={32} 
-                     height={32} 
-                     className={style.plus}
-                     onClick={onClickPlus}
-                     src={(isAdded) ? "./img/btn-checked.svg" : "./img/plus.svg"} 
-                     alt="add to card" />
+                <img
+                    width={32}
+                    height={32}
+                    className={style.plus}
+                    onClick={onClickPlus}
+                    src={isAdded ? "./img/btn-checked.svg" : "./img/plus.svg"}
+                    alt="add to card"
+                />
             </div>
         </div>
-    )
+    ) : (
+        <Skeleton />
+    );
 }
 
-export default Card
+export default Card;
