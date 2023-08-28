@@ -38,11 +38,16 @@ function Drawer({ onClose, onRemoveItem, opened }) {
         setIsLoading(false);
     };
 
+    document.addEventListener("keydown", (e) => {
+        if (e.code === "Escape") onClose();
+    });
+
     return (
         <div
             className={`${style.overlay} ${
                 opened ? style.overlay__visibility : ""
             }`}
+            onClick={(e) => e.currentTarget === e.target && onClose()}
         >
             <div className={style.drawer}>
                 <div className={style.drawer__header}>

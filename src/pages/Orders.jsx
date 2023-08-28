@@ -1,12 +1,10 @@
 import "../index.scss";
 import Card from "../components/card/Card";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import AppContext from "../context";
 import Skeleton from "../components/skeleton/Skeleton";
 
 function Orders() {
-    const { onAddFavorite, onAddtoCart } = useContext(AppContext);
     const [order, setOrder] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
@@ -15,7 +13,6 @@ function Orders() {
                 const { data } = await axios.get(
                     "https://64e5b24809e64530d17edcdc.mockapi.io/orders"
                 );
-                console.log(data);
                 setOrder(
                     data.reduce((prev, obj) => [...prev, ...obj.items], [])
                 );
