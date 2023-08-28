@@ -47,7 +47,9 @@ function Home({
                 {isLoading
                     ? items
                           .filter((item) =>
-                              item.title.toLowerCase().includes(searchValue)
+                              item.title
+                                  .toLowerCase()
+                                  .includes(searchValue.toLowerCase())
                           )
                           .map((obj, i) => (
                               <Card
